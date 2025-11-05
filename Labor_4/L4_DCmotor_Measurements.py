@@ -17,8 +17,8 @@ import time
 
 # ----------- global constant -----------
 # assign motor driver interface to GPIO's of Raspberry Pi
-M3 = 6 
-M4 = 13
+M3 = 6     # M3 on Motor screw terminal
+M4 = 13    # M4 on Motor screw terminal 
 PWMB = 12  # GPIO to be pulsed
 
 # settings

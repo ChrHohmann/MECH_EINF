@@ -17,10 +17,10 @@ import time
 
 # ----------- global constant -----------
 # assign motor driver interface to GPIO's of Raspberry Pi
-M1 = 20
-M2 = 21
-M3 = 6
-M4 = 13
+M1 = 20  # M1 on Motor screw terminal - connetct to signal A on coil 1
+M2 = 21  # M2 on Motor screw terminal - connetct to signal A/ on coil 1
+M3 = 6   # M3 on Motor screw terminal - connetct to signal B on coil 2
+M4 = 13  # M4 on Motor screw terminal - connetct to signal B/ on coil 2
 D1 = 26  # enable/disable output pins M1, M2
 D2 = 12  # enable/disable output pins M3, M4
 
