@@ -1,10 +1,14 @@
 """-----------------------------------------------------
 ¦    File name: L5_IR_kalibrieren.py                    ¦
 ¦    Version: 1.1                                       ¦
-¦    Author: Jonas Josi                                 ¦
+¦    Authors:                                           ¦
+¦       Jonas Josi                                      ¦
+¦       Matthias Lang                                   ¦
+¦       Christian Hohmann                               ¦
+¦       Joschka Maters                                  ¦
 ¦    Date created: 2024/05/15                           ¦
-¦    Last modified: 2024/05/15                          ¦
-¦    Python Version: 3.7.3                              ¦
+¦    Last modified: 2024/10/06                          ¦
+¦    Python Version: 3.11.2                             ¦
 ------------------------------------------------------"""
 
 # ----------- import external Python module -----------
@@ -16,7 +20,7 @@ import csv
 CSV_FILENAME = "Sensorkalibrierung.csv"  # *** CHANGE ME *** file to save calibration data for infrared sensor
 CSV_DELIMITER = ";"  # *** CHANGE ME *** Character to separate data fields / cells in the CSV file
 
-IR_SENSOR = 2  # Connect the Grove 80cm Infrared Proximity Sensor to analog port A0
+IR_SENSOR = 2  # Connect the Grove 80cm Infrared Proximity Sensor to analog port A2
 
 MIN_MEAS_DIST = 25  # minimum measurement distance in [mm]
 MAX_MEAS_DIST = 65  # max measurement distance in [mm]
