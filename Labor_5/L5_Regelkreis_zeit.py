@@ -1,10 +1,14 @@
 """-----------------------------------------------------
-¦    File name: L5_Regelkreis_zeit.py                ¦
-¦    Version: 1.0                                       ¦
-¦    Author: Jonas Josi                                 ¦
+¦    File name: L5_Regelkreis_zeit.py                   ¦
+¦    Version: 1.1                                       ¦
+¦    Authors:                                           ¦
+¦       Jonas Josi                                      ¦
+¦       Matthias Lang                                   ¦
+¦       Christian Hohmann                               ¦
+¦       Joschka Maters                                  ¦
 ¦    Date created: 2024/05/15                           ¦
-¦    Last modified: 2024/05/15                          ¦
-¦    Python Version: 3.7.3                              ¦
+¦    Last modified: 2024/10/06                          ¦
+¦    Python Version: 3.11.2                             ¦
 ------------------------------------------------------"""
 
 # ----------- import external Python module -----------
@@ -21,28 +25,28 @@ import time
 k = 0.001  # *** CHANGE ME *** controller amplification factor k [s/mm]
 N_MEASUREMENTS = 10  # *** CHANGE ME *** number of distance measurements [] over which to average
 VOLTAGE = 9  # *** CHANGE ME *** voltage for DC motor [V] between 0 und 12 V (Voltage from power supply is always 12 V)
+
+# results-file parameters
 CSV_FILENAME = "Wegdiagramm_Zeit.csv"  # *** CHANGE ME *** file to log data (timestamp and distance)
 CSV_DELIMITER = ";"  # *** CHANGE ME *** Character to separate data fields / cells in the CSV file
 
-IR_SENSOR = 2  # Connect the Grove 80cm Infrared Proximity Sensor to analog port A0
+# assign Grove BaseHat Ports
+IR_SENSOR = 2  # Connect the Grove 80cm Infrared Proximity Sensor to analog port A2
 
 # assign motor driver interface to GPIO's of Raspberry Pi
-M3 = 6
-M4 = 13
-PWMB = 12  # enable/disable output pins M1, M2
+M3 = 6        # M3 on Motor screw terminal
+M4 = 13       # M4 on Motor screw terminal 
+PWMB = 12     # GPIO to be pulsed
 
+# analog-digital-converter parameters
 adc = ADC()
-
 ADC_REF = 3.3  # Reference voltage of ADC (which is built-in the GrovePi-Board) is 5 V
 ADC_RES = 4095  # The ADC on the GrovePi-Board has a resolution of 10 bit -> 1024 different digital levels in range of 0-1023
-
 
 # auxiliary parameters
 MAX_VOLTAGE = 12  # supply voltage of motor driver is 12 V (which equals the max. rated voltage of the DC motor)
 PWM_FREQUENCY = 1000  # Hz
-PWM_DUTYCYCLE_RESOLUTION = 12  # 8 bit -> value range of PWM_DUTYCYCLE is between 0 (OFF) and 255 (FULLY ON)
-PWM_DUTYCYCLE_BITS = round((2 ** PWM_DUTYCYCLE_RESOLUTION - 1) / MAX_VOLTAGE * VOLTAGE, 0)  # PWM_DUTYCYCLE from 0 (OFF) to 255 bit (FULLY ON)
-PWM_DUTYCYCLE = (PWM_DUTYCYCLE_BITS/(2**PWM_DUTYCYCLE_RESOLUTION - 1) * 100)
+PWM_DUTYCYCLE = round(VOLTAGE / MAX_VOLTAGE * 100, 3)  # PWM_DUTYCYCLE from 0 (OFF) to 100 percent (FULLY ON)
 
 # ----------- function definition -----------
 def stop_motor():
