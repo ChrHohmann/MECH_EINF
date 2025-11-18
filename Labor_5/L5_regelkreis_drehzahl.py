@@ -27,11 +27,6 @@ N_MEASUREMENTS = 10    # *** CHANGE ME *** number of distance measurements [] ov
 DRIVETIME = 0.1        # *** CHANGE ME *** time in [s] to drive the motor with a specific voltage before recalculate the voltage
 OFFSET_DUTYCYCLE = 10  # *** CHANGE ME *** value [dmnl] to add to calculated duty_cycle of controller. This prevents that the motor is driven by a voltage which is to small to rotate the motor shaft.
 
-# regression parameters (2nd degree polynom) of the calibration of the IR-sensor
-POLY_A = 634.24      # *** CHANGE ME *** according to the regression data calculated in excel
-POLY_B = -545.7      # *** CHANGE ME *** according to the regression data calculated in excel
-POLY_C = 142.5       # *** CHANGE ME *** according to the regression data calculated in excel 
-
 # results-file parameters
 CSV_FILENAME = "Wegdiagramm_Drehzahl.csv"  # *** CHANGE ME *** file to log data (timestamp and distance)
 CSV_DELIMITER = ";"  # *** CHANGE ME *** Character to separate data fields / cells in the CSV file
@@ -236,7 +231,7 @@ if __name__ == "__main__":
             average_voltage = sum_voltage / N_MEASUREMENTS
 
             # Calculate distance using sensor characteristics, coefficients found from calibration (L5_IR_kalibrieren.py)
-            distance = round(POLY_A * average_voltage * average_voltage - POLY_B * average_voltage + POLY_C, 2)
+            distance = round(634.24 * average_voltage * average_voltage - 545.7 * average_voltage + 142.5, 2)
 
             if start_timestamp:
                 time_elapsed = round(time.time() - start_timestamp, 3)
