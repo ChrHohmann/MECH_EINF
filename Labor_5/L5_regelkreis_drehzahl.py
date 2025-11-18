@@ -1,10 +1,14 @@
 """-----------------------------------------------------
 ¦    File name: L5_Regelkreis_drehzahl.py               ¦
-¦    Version: 1.0                                       ¦
-¦    Author: Jonas Josi                                 ¦
+¦    Version: 1.1                                       ¦
+¦    Authors:                                           ¦
+¦       Jonas Josi                                      ¦
+¦       Matthias Lang                                   ¦
+¦       Christian Hohmann                               ¦
+¦       Joschka Maters                                  ¦
 ¦    Date created: 2024/05/15                           ¦
-¦    Last modified: 2024/05/15                          ¦
-¦    Python Version: 3.7.3                              ¦
+¦    Last modified: 2024/10/06                          ¦
+¦    Python Version: 3.11.2                             ¦
 ------------------------------------------------------"""
 
 # ----------- import external Python module -----------
@@ -18,24 +22,32 @@ import time
 
 # ----------- global constant -----------
 """ Settings """
-k = 2  # *** CHANGE ME *** controller amplification factor k [mm^-1]
-N_MEASUREMENTS = 10  # *** CHANGE ME *** number of distance measurements [] over which to average
-DRIVETIME = 0.1  # *** CHANGE ME *** time in [s] to drive the motor with a specific voltage before recalculate the voltage
+k = 2                  # *** CHANGE ME *** controller amplification factor k [mm^-1]
+N_MEASUREMENTS = 10    # *** CHANGE ME *** number of distance measurements [] over which to average
+DRIVETIME = 0.1        # *** CHANGE ME *** time in [s] to drive the motor with a specific voltage before recalculate the voltage
 OFFSET_DUTYCYCLE = 10  # *** CHANGE ME *** value [dmnl] to add to calculated duty_cycle of controller. This prevents that the motor is driven by a voltage which is to small to rotate the motor shaft.
+
+# regression parameters (2nd degree polynom) of the calibration of the IR-sensor
+POLY_A = 634.24      # *** CHANGE ME *** according to the regression data calculated in excel
+POLY_B = -545.7      # *** CHANGE ME *** according to the regression data calculated in excel
+POLY_C = 142.5       # *** CHANGE ME *** according to the regression data calculated in excel 
+
+# results-file parameters
 CSV_FILENAME = "Wegdiagramm_Drehzahl.csv"  # *** CHANGE ME *** file to log data (timestamp and distance)
 CSV_DELIMITER = ";"  # *** CHANGE ME *** Character to separate data fields / cells in the CSV file
 
-IR_SENSOR = 2  # Connect the Grove 80cm Infrared Proximity Sensor to analog port A0
+# assign Grove BaseHat Ports
+IR_SENSOR = 2  # Connect the Grove 80cm Infrared Proximity Sensor to analog port A2
 
 # assign motor driver interface to GPIO's of Raspberry Pi
-M3 = 6
-M4 = 13
-PWMB = 12  # enable/disable output pins M1, M2
+M3 = 6        # M3 on Motor screw terminal
+M4 = 13       # M4 on Motor screw terminal 
+PWMB = 12     # GPIO to be pulsed
 
+# analog-digital-converter parameters
+adc = ADC()
 ADC_REF = 3.3  # Reference voltage of ADC (which is built-in the GrovePi-Board) is 5 V
 ADC_RES = 4095  # The ADC on the GrovePi-Board has a resolution of 10 bit -> 1024 different digital levels in range of 0-1023
-
-adc = ADC()
 
 # auxiliary parameters
 MAX_VOLTAGE = 12  # supply voltage of motor driver is 12 V (which equals the max. rated voltage of the DC motor)
@@ -224,7 +236,7 @@ if __name__ == "__main__":
             average_voltage = sum_voltage / N_MEASUREMENTS
 
             # Calculate distance using sensor characteristics, coefficients found from calibration (L5_IR_kalibrieren.py)
-            distance = round(634.24 * average_voltage * average_voltage - 545.7 * average_voltage + 142.5, 2)
+            distance = round(POLY_A * average_voltage * average_voltage - POLY_B * average_voltage + POLY_C, 2)
 
             if start_timestamp:
                 time_elapsed = round(time.time() - start_timestamp, 3)
