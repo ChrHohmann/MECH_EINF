@@ -1,10 +1,14 @@
 """-----------------------------------------------------
 ¦    File name: L5_IR_ouput.py                          ¦
-¦    Version: 1.0                                       ¦
-¦    Author: Jonas Josi                                 ¦
+¦    Version: 1.1                                       ¦
+¦    Authors:                                           ¦
+¦       Jonas Josi                                      ¦
+¦       Matthias Lang                                   ¦
+¦       Christian Hohmann                               ¦
+¦       Joschka Maters                                  ¦
 ¦    Date created: 2024/05/15                           ¦
-¦    Last modified: 2024/05/15                          ¦
-¦    Python Version: 3.7.3                              ¦
+¦    Last modified: 2024/10/06                          ¦
+¦    Python Version: 3.11.2                             ¦
 ------------------------------------------------------"""
 
 # ----------- import external Python module -----------
@@ -13,7 +17,7 @@ import time
 
 
 # ----------- global constant -----------
-IR_SENSOR = 2  # Connect the Grove 80cm Infrared Proximity Sensor to analog port A0
+IR_SENSOR = 2  # Connect the Grove 80cm Infrared Proximity Sensor to analog port A2
 
 N_MEASUREMENTS = 200  # number of measurements (of ir sensor) to make, before calculating the average value
 MESUREMENT_INTERVAL = 0.5  # interval time in [s] between two measurements
