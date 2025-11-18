@@ -1,10 +1,14 @@
 """-----------------------------------------------------
 ¦    File name: L5_DCmotor.py                           ¦
-¦    Version: 1.0                                       ¦
-¦    Author: Jonas Josi                                 ¦
+¦    Version: 1.1                                       ¦
+¦    Authors:                                           ¦
+¦       Jonas Josi                                      ¦
+¦       Matthias Lang                                   ¦
+¦       Christian Hohmann                               ¦
+¦       Joschka Maters                                  ¦
 ¦    Date created: 2024/05/15                           ¦
-¦    Last modified: 2024/05/15                          ¦
-¦    Python Version: 3.7.3                              ¦
+¦    Last modified: 2024/10/06                          ¦
+¦    Python Version: 3.11.2                              ¦
 ------------------------------------------------------"""
 
 # ----------- import external Python module -----------
@@ -13,12 +17,13 @@ import lgpio  # library to create hardware-based PWM signals on Raspberry Pi
 
 # ----------- global constant -----------
 # assign motor driver interface to GPIO's of Raspberry Pi
-M3 = 6
-M4 = 13
-PWMB = 12  # enable/disable output pins M1, M2
+# assign motor driver interface to GPIO's of Raspberry Pi
+M3 = 6        # M3 on Motor screw terminal
+M4 = 13       # M4 on Motor screw terminal 
+PWMB = 12     # GPIO to be pulsed
 
 # settings
-VOLTAGE = 9  # *** CHANGE ME *** voltage for DC motor [V] between 0 und 12 V (Voltage from power supply is always 12 V)
+VOLTAGE = 9    # *** CHANGE ME *** voltage for DC motor [V] between 0 und 12 V (Voltage from power supply is always 12 V)
 DIRECTION = 0  # *** CHANGE ME *** movement direction (0 or 1) of slide on linear guideway
 
 # auxiliary parameters
